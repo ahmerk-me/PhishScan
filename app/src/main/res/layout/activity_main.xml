@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:openDrawer="right">
+
+    <include
+        android:id="@+id/app_bar_home"
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="@color/bgColor"
+        app:elevation="0dp">
+
+        <LinearLayout
+            android:id="@+id/relative_side_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/menu_logo" />
+
+            <ScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_editProfile"
+                        style="@style/TextViewMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="50dp"
+                        android:text="@string/MyProfileLabel"
+                        android:textColor="@color/textColor"
+                        app:drawableStartCompat="@drawable/menu_dot" />
+
+                    <TextView
+                        android:id="@+id/tv_wallet"
+                        style="@style/TextViewMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/MyWalletLabel"
+                        app:drawableStartCompat="@drawable/menu_dot" />
+
+                    <TextView
+                        android:id="@+id/tv_wishlist"
+                        style="@style/TextViewMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/FavoritesLabel"
+                        app:drawableStartCompat="@drawable/menu_dot" />
+
+                    <TextView
+                        android:id="@+id/tv_search"
+                        style="@style/TextViewMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/SearchLabel"
+                        app:drawableStartCompat="@drawable/menu_dot" />
+
+                    <TextView
+                        android:id="@+id/tv_contactUs"
+                        style="@style/TextViewMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/ContactUsLabel"
+                        app:drawableStartCompat="@drawable/menu_dot" />
+
+                    <TextView
+                        android:id="@+id/tv_faq"
+                        style="@style/TextViewMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/FAQ"
+                        app:drawableStartCompat="@drawable/menu_dot" />
+
+                    <TextView
+                        android:id="@+id/tv_aboutUs"
+                        style="@style/TextViewMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/AboutUSLabel"
+                        app:drawableStartCompat="@drawable/menu_dot" />
+
+                    <TextView
+                        android:id="@+id/tv_privacyPolicy"
+                        style="@style/TextViewMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/PrivacyPolicyLabel"
+                        app:drawableStartCompat="@drawable/menu_dot" />
+
+                    <TextView
+                        android:id="@+id/tv_terms"
+                        style="@style/TextViewMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/TermsAndConditions"
+                        app:drawableStartCompat="@drawable/menu_dot" />
+
+                    <TextView
+                        android:id="@+id/tv_logout"
+                        style="@style/TextViewMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/LogoutLabel"
+                        app:drawableStartCompat="@drawable/menu_dot" />
+
+                    <TextView
+                        android:id="@+id/tv_language"
+                        style="@style/TextViewMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/ArabicLabel"
+                        app:drawableStartCompat="@drawable/menu_dot" />
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
+

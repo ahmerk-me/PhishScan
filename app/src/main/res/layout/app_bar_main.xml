@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FDFDFD"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/app_bar_normal"
+            layout="@layout/app_bar_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_line_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appbar"
+        android:scaleType="fitXY"
+        android:src="@drawable/line_topbar" />
+
+    <FrameLayout
+        android:id="@+id/content_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_bar"
+        android:layout_below="@+id/iv_line_topbar"
+        android:background="#FDFDFD"
+        tools:showIn="@layout/app_bar_main" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_bar"
+        android:scaleType="fitXY"
+        android:src="@drawable/line_bottombar" />
+
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_bar_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/relative_qr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/qr" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/bottombar_divider" />
+
+        <RelativeLayout
+            android:id="@+id/relative_about"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/about_us" />
+
+        </RelativeLayout>
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/my_bookings_btn"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:gravity="center"-->
+        <!--            android:padding="0dp"-->
+        <!--            android:text="@string/MyBooking"-->
+        <!--            android:textColor="@color/textColor_CCD1D8"-->
+        <!--            android:textSize="12sp"-->
+        <!--            app:drawableTopCompat="@drawable/calendar_unsel" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/doctors_btn"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:gravity="center"-->
+        <!--            android:padding="0dp"-->
+        <!--            android:text="@string/DoctorsLabel"-->
+        <!--            android:textColor="@color/textColor_CCD1D8"-->
+        <!--            android:textSize="12sp"-->
+        <!--            app:drawableTopCompat="@drawable/doctor_unsel" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:gravity="center"-->
+        <!--            android:padding="0dp"-->
+        <!--            android:text="@string/FavoritesLabel"-->
+        <!--            android:textColor="@color/textColor_CCD1D8"-->
+        <!--            android:textSize="12sp"-->
+        <!--            android:visibility="invisible"-->
+        <!--            app:drawableTopCompat="@drawable/doctor_sel" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/wallet_btn"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:gravity="center"-->
+        <!--            android:padding="0dp"-->
+        <!--            android:text="@string/WalletLabel"-->
+        <!--            android:textColor="@color/textColor_CCD1D8"-->
+        <!--            android:textSize="12sp"-->
+        <!--            app:drawableTopCompat="@drawable/wallet_unsel" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/my_reports"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:gravity="center"-->
+        <!--            android:padding="0dp"-->
+        <!--            android:text="@string/MyReportsLabel"-->
+        <!--            android:textColor="@color/textColor_CCD1D8"-->
+        <!--            android:textSize="12sp"-->
+        <!--            app:drawableTopCompat="@drawable/clipboard_unsel" />-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_bar_doctor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_bar_bg"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="15dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/reports_doctor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="@string/Reports"
+            android:textColor="@color/textColor_CCD1D8"
+            android:textSize="12sp"
+            app:drawableTopCompat="@drawable/clipboard_unsel" />
+
+        <TextView
+            android:id="@+id/messages_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="@string/MessagesLabel"
+            android:textColor="@color/textColor_CCD1D8"
+            android:textSize="12sp"
+            app:drawableTopCompat="@drawable/mess_unsel" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="@string/FavoritesLabel"
+            android:textColor="@color/textColor_CCD1D8"
+            android:textSize="12sp"
+            android:visibility="invisible"
+            app:drawableTopCompat="@drawable/doctor_sel" />
+
+        <TextView
+            android:id="@+id/wallet_btn_doctor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="@string/WalletLabel"
+            android:textColor="@color/textColor_CCD1D8"
+            android:textSize="12sp"
+            app:drawableTopCompat="@drawable/wallet_unsel" />
+
+        <TextView
+            android:id="@+id/consultation_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="@string/ConsultationLabel"
+            android:textColor="@color/textColor_CCD1D8"
+            android:textSize="12sp"
+            app:drawableTopCompat="@drawable/calendar_unsel" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_home_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="20dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/home_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/home_bottombar" />
+
+        <TextView
+            android:id="@+id/tv_home_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingTop="5dp"
+            android:text="@string/HomeLabel"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_no_data"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/NoDataFoundLabel"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/mloading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgWhite_transparent25"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/loader_bg"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:indeterminateDrawable="@drawable/progress_logo" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

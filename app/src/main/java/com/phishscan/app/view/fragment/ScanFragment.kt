@@ -1,0 +1,216 @@
+package com.phishscan.app.view.fragment
+
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.budiyev.android.codescanner.AutoFocusMode
+import com.budiyev.android.codescanner.CodeScanner
+import com.budiyev.android.codescanner.DecodeCallback
+import com.budiyev.android.codescanner.ErrorCallback
+import com.budiyev.android.codescanner.ScanMode
+import com.google.android.material.snackbar.Snackbar
+import com.phishscan.app.R
+import com.phishscan.app.classes.DisableLayout
+import com.phishscan.app.classes.EnableLayout
+import com.phishscan.app.classes.LanguageSessionManager
+import com.phishscan.app.classes.SessionManager
+import com.phishscan.app.databinding.FragmentScanBinding
+import com.phishscan.app.view.activity.MainActivity
+import com.phishscan.app.viewmodel.ScanViewModel
+
+open class ScanFragment(private val act: MainActivity) : Fragment() {
+
+    private val TAG = ScanFragment::class.java.simpleName
+
+    private lateinit var mSessionManager: SessionManager
+
+    private lateinit var languageSessionManager: LanguageSessionManager
+
+    private lateinit var binding: FragmentScanBinding
+
+    private lateinit var viewModel: ScanViewModel
+
+    private lateinit var codeScanner: CodeScanner
+
+
+    @SuppressLint("LongLogTag")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        println("Entered ScanFragment !!!====<>>>>>")
+
+        try {
+
+            mSessionManager = SessionManager(act)
+
+            languageSessionManager = LanguageSessionManager(act)
+
+            viewModel = ViewModelProvider(act)[ScanViewModel::class.java]
+
+            codeScanner = CodeScanner(act, binding.scannerView)
+
+        } catch (e: Exception) {
+
+            Log.e(
+                TAG + " onCreateLine>>LineNumber: " +
+                        Thread.currentThread().stackTrace[2].lineNumber, e.message.toString()
+            )
+
+        }
+    }
+
+
+    @SuppressLint("LongLogTag")
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        try {
+
+            binding = FragmentScanBinding.inflate(inflater, container, false)
+
+            initViews()
+
+        } catch (e: Exception) {
+
+            Log.e(
+                TAG + " onCreateLine>>LineNumber: " +
+                        Thread.currentThread().stackTrace[2].lineNumber, e.message.toString()
+            )
+
+        }
+
+        return binding.root
+
+    }
+
+
+    open fun initViews() {
+
+        act.tabNumber = 0
+        act.setupDefaultSettings()
+        act.setTextFonts(binding.root)
+
+        act.binding.appBarHome.appBarNormal.title.text = act.getString(R.string.Scan)
+
+        setupScanner()
+
+        observeViewModel()
+        setData()
+        onClicks()
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        codeScanner.startPreview()
+    }
+
+
+    override fun onPause() {
+        codeScanner.releaseResources()
+        super.onPause()
+    }
+
+
+    private fun onClicks() {
+
+        binding.scannerView.setOnClickListener {
+            codeScanner.startPreview()
+        }
+    }
+
+
+    private fun setData() {
+
+        // Callbacks
+        codeScanner.decodeCallback = DecodeCallback {
+            act.runOnUiThread {
+                Toast.makeText(act, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
+            act.runOnUiThread {
+                Toast.makeText(
+                    act, "Camera initialization error: ${it.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+    }
+
+
+    private fun observeViewModel() {
+
+//todo: observe the scan here
+
+//        viewModel.booksArrayList.observe(viewLifecycleOwner) { list ->
+//
+//            Log.d("observeViewModel", "updateList -> " + list?.size)
+//
+//            binding.rvBooksRecycler.visibility =
+//                if (list != null && list.size > 0) View.VISIBLE else View.GONE
+//
+////            viewModel.setPaging(binding.rvReportsRecycler, mlayoutManagerReports, list ?: ArrayList())
+//
+//            mAdapterBooks.updateList(list ?: ArrayList())
+//
+//            showListEmptyMessage(
+//                act.binding.appBarHome.tvNoData,
+//                act.getString(R.string.NoDataFoundLabel),
+//                act,
+//                viewModel.booksArrayList.value.isNullOrEmpty()
+//            )
+//
+//        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+
+            if (isLoading != null) {
+                act.binding.appBarHome.mloading.visibility =
+                    if (isLoading) View.VISIBLE else View.GONE
+                if (isLoading) {
+                    DisableLayout(act.binding.root as ViewGroup)
+                    DisableLayout(binding.root as ViewGroup)
+                } else {
+                    EnableLayout(act.binding.root as ViewGroup)
+                    EnableLayout(binding.root as ViewGroup)
+                }
+            }
+        }
+
+        viewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (isError) {
+                Snackbar.make(binding.root, viewModel.errorText, Snackbar.LENGTH_LONG).show()
+            }
+        }
+    }
+
+
+    private fun setupScanner() {
+        // Parameters (default values)
+        codeScanner.camera = CodeScanner.CAMERA_BACK // or CAMERA_FRONT or specific camera id
+        codeScanner.formats = CodeScanner.ALL_FORMATS // list of type BarcodeFormat,
+        // ex. listOf(BarcodeFormat.QR_CODE)
+        codeScanner.autoFocusMode = AutoFocusMode.SAFE // or CONTINUOUS
+        codeScanner.scanMode = ScanMode.SINGLE // or CONTINUOUS or PREVIEW
+        codeScanner.isAutoFocusEnabled = true // Whether to enable auto focus or not
+        codeScanner.isFlashEnabled = false // Whether to enable flash or not
+    }
+
+}

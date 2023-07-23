@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <!--        below is for border and label of InputTextLayout-->
+        <item name="colorOnSurface">@color/colorPrimaryDark</item>
+
+    </style>
+
+    <style name="Text.Button.Green" parent="AppTheme">
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_green_10dp</item>
+    </style>
+
+    <style name="Text.Button.Green.Dotted" parent="AppTheme">
+        <item name="android:textColor">@color/textColorGreen</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/border_dashed_green_10dp</item>
+    </style>
+
+    <style name="Text.Button.Red.Dotted" parent="AppTheme">
+        <item name="android:textColor">@color/textColorRed</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/border_dashed_red_10dp</item>
+    </style>
+
+    <style name="Text.Button.Red" parent="AppTheme">
+        <!--        <item name="android:textStyle">bold</item>-->
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_pink_10dp</item>
+    </style>
+
+    <style name="Text.Button.Transparent" parent="AppTheme">
+        <!--        <item name="android:textStyle">bold</item>-->
+        <item name="android:textColor">@color/textColorBlack</item>
+        <item name="android:paddingStart">25dp</item>
+        <item name="android:paddingEnd">25dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/border_grey_10dp</item>
+    </style>
+
+    <style name="MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <!--        Note: very important to change AppTheme's parent to MaterialComponents -->
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeColor">@color/cellsGreen</item>
+        <item name="hintTextColor">@color/textColorBlack</item>
+        <item name="android:textColorHint">@color/hintColor</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+    </style>
+
+    <style name="Text.Black" parent="AppTheme">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="Text.Blue" parent="AppTheme">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">@color/textColorBlue</item>
+    </style>
+
+    <style name="Text.Green" parent="AppTheme">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">@color/textColorGreen</item>
+    </style>
+
+    <style name="Text.Gray" parent="AppTheme">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">@color/hintColor</item>
+    </style>
+
+    <style name="Text.White" parent="AppTheme">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+    </style>
+
+    <style name="Text.Red" parent="AppTheme">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">@color/textColor_FA4169</item>
+    </style>
+
+    <style name="Text.Black.Heading" parent="AppTheme">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="Text.Otp" parent="AppTheme">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <dimen name="pageTopPadding">35dp</dimen>
+    <dimen name="pageSidePadding">30dp</dimen>
+    <dimen name="prodDetailPageSidePadding">20dp</dimen>
+    <dimen name="bottomMargin">20dp</dimen>
+
+    <style name="Text.Button.Black" parent="AppTheme">
+        <!--        <item name="android:textStyle">bold</item>-->
+        <item name="android:textColor">@color/textColorWhite</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:background">@drawable/btn_black_round</item>
+    </style>
+
+    <!--==============-->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Text.SubTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/textColorWhite</item>
+    </style>
+
+    <style name="Text.Tab">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="Text" parent="TextAppearance.AppCompat.Body1"></style>
+
+    <style name="TextViewMenu" parent="AppTheme">
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingStart">30dp</item>
+        <item name="android:paddingEnd">30dp</item>
+        <item name="android:drawablePadding">15dp</item>
+        <item name="android:textColor">@color/textColorBlack</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/textColorBlack</item>
+        <item name="colorControlActivated">@color/color_FE9870</item>
+    </style>
+
+    <style name="customRatingBarSmall" parent="@android:style/Widget.RatingBar">
+<!--        <item name="android:progressDrawable">@drawable/custom_rating_stars_small</item>-->
+        <item name="android:progressBackgroundTint">@color/color_FE9870</item>
+        <item name="android:ratingBarStyleSmall">@id/text</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:numStars">5</item>
+<!--        <item name="android:isIndicator">true</item>-->
+    </style>
+
+    <style name="CustomCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners</item>
+    </style>
+
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">15dp</item>
+        <item name="cornerSizeBottomLeft">15dp</item>
+    </style>
+
+</resources>
