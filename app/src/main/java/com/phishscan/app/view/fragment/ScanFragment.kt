@@ -1,19 +1,19 @@
 package com.phishscan.app.view.fragment
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
@@ -24,6 +24,7 @@ import com.phishscan.app.R
 import com.phishscan.app.classes.DisableLayout
 import com.phishscan.app.classes.EnableLayout
 import com.phishscan.app.classes.LanguageSessionManager
+import com.phishscan.app.classes.NotPhishing
 import com.phishscan.app.classes.SessionManager
 import com.phishscan.app.databinding.FragmentScanBinding
 import com.phishscan.app.view.activity.MainActivity
@@ -43,6 +44,9 @@ open class ScanFragment(private val act: MainActivity) : Fragment() {
 
     private lateinit var codeScanner: CodeScanner
 
+    private var isPermissionGranted = false
+
+    private val RC_PERMISSION = 10
 
     @SuppressLint("LongLogTag")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +64,10 @@ open class ScanFragment(private val act: MainActivity) : Fragment() {
 
             codeScanner = CodeScanner(act, binding.scannerView)
 
+            Log.e("11111", " checkPermissions() ==>" + checkPermissions())
+            if (checkPermissions()) {
+                codeScanner.startPreview()
+            }
         } catch (e: Exception) {
 
             Log.e(
@@ -108,15 +116,9 @@ open class ScanFragment(private val act: MainActivity) : Fragment() {
 
         setupScanner()
 
-        observeViewModel()
         setData()
+        observeViewModel()
         onClicks()
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        codeScanner.startPreview()
     }
 
 
@@ -140,6 +142,7 @@ open class ScanFragment(private val act: MainActivity) : Fragment() {
         codeScanner.decodeCallback = DecodeCallback {
             act.runOnUiThread {
                 Toast.makeText(act, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+                act.showPhishDialog(NotPhishing)
             }
         }
 
@@ -211,6 +214,51 @@ open class ScanFragment(private val act: MainActivity) : Fragment() {
         codeScanner.scanMode = ScanMode.SINGLE // or CONTINUOUS or PREVIEW
         codeScanner.isAutoFocusEnabled = true // Whether to enable auto focus or not
         codeScanner.isFlashEnabled = false // Whether to enable flash or not
+    }
+
+
+    private fun checkPermissions(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return if (ContextCompat.checkSelfPermission(
+                    act,
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                isPermissionGranted = false
+                ActivityCompat.requestPermissions(act,
+                    arrayOf(Manifest.permission.CAMERA),
+                    RC_PERMISSION
+                )
+                false
+            } else {
+                isPermissionGranted = true
+                true
+            }
+        } else {
+            isPermissionGranted = true
+            return true
+        }
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults
+        )
+        if (requestCode == RC_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                isPermissionGranted = true
+                codeScanner.startPreview()
+            } else {
+                isPermissionGranted = false
+            }
+        }
     }
 
 }

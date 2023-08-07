@@ -27,7 +27,10 @@ import com.phishscan.app.classes.English_Bold_Font
 import com.phishscan.app.classes.English_Regular_Font
 import com.phishscan.app.classes.LanguageSessionManager
 import com.phishscan.app.classes.LocaleHelper
+import com.phishscan.app.classes.MaybePhishing
 import com.phishscan.app.classes.Navigator
+import com.phishscan.app.classes.NotPhishing
+import com.phishscan.app.classes.Phishing
 import com.phishscan.app.classes.SessionManager
 import com.phishscan.app.classes.hideKeyboard
 import com.phishscan.app.classes.isEnglish
@@ -43,6 +46,7 @@ open class MainActivity : AppCompatActivity() {
     lateinit var act: MainActivity
 
     companion object {
+
         lateinit var listener: BaseActivityListener
     }
 
@@ -118,7 +122,7 @@ open class MainActivity : AppCompatActivity() {
 
             act.binding.appBarHome.appbar.visibility = VISIBLE
 
-            act.binding.appBarHome.relativeHomeBtn.visibility = VISIBLE
+            act.binding.appBarHome.relativeHomeBtn.visibility = GONE
 
             title.setTypeface(tf, Typeface.BOLD)
 
@@ -227,7 +231,6 @@ open class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
         // Sets up permissions request launcher.
         requestPermissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -677,6 +680,43 @@ open class MainActivity : AppCompatActivity() {
     }
 
 
+    fun showPhishDialog(dialogType: Int) {
+
+        with(binding.layoutDialog) {
+
+            linearDialogParent.visibility = VISIBLE
+
+            when (dialogType) {
+
+                NotPhishing -> {
+                    ivStatusImg.setImageDrawable(ContextCompat.getDrawable(act, R.drawable.not_phishing))
+                    tvResult.text = act.getString(R.string.NotPhishingText)
+                }
+
+                MaybePhishing -> {
+                    ivStatusImg.setImageDrawable(ContextCompat.getDrawable(act, R.drawable.maybe_phishing))
+                    tvResult.text = act.getString(R.string.MaybePhishingText)
+                }
+
+                Phishing -> {
+                    ivStatusImg.setImageDrawable(ContextCompat.getDrawable(act, R.drawable.not_phishing))
+                    tvResult.text = act.getString(R.string.NotPhishingText)
+                }
+            }
+
+            tvVisit.setOnClickListener(View.OnClickListener {
+                Snackbar.make(tvVisit, "Visiting website...", Snackbar.LENGTH_SHORT).show()
+                linearDialogParent.visibility = GONE
+            })
+
+            tvAbort.setOnClickListener(View.OnClickListener {
+                Snackbar.make(tvVisit, "Aborting...", Snackbar.LENGTH_SHORT).show()
+                linearDialogParent.visibility = GONE
+            })
+        }
+    }
+
+
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
 
@@ -691,6 +731,5 @@ open class MainActivity : AppCompatActivity() {
 //        }
 
     }
-
 
 }

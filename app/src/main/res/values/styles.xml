@@ -7,7 +7,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-<!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <!--        <item name="android:windowTranslucentStatus">true</item>-->
         <!--        below is for border and label of InputTextLayout-->
         <item name="colorOnSurface">@color/colorPrimaryDark</item>
 
@@ -72,7 +72,7 @@
 
     <style name="Text.Black" parent="AppTheme">
         <item name="android:textSize">14sp</item>
-        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/textColor</item>
     </style>
 
@@ -123,12 +123,21 @@
     <dimen name="prodDetailPageSidePadding">20dp</dimen>
     <dimen name="bottomMargin">20dp</dimen>
 
-    <style name="Text.Button.Black" parent="AppTheme">
-        <!--        <item name="android:textStyle">bold</item>-->
-        <item name="android:textColor">@color/textColorWhite</item>
-        <item name="android:padding">15dp</item>
+    <style name="Text.Button" parent="AppTheme">
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:background">@drawable/btn_black_round</item>
+        <item name="android:background">@drawable/border_grey_10dp</item>
+    </style>
+
+    <style name="Text.Button.Visit" parent="Text.Button">
+        <item name="android:textColor">@color/textColorGreen</item>
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
+
+    <style name="Text.Button.Abort" parent="Text.Button">
+        <item name="android:textColor">@color/textColorRed</item>
+        <item name="android:layout_marginEnd">10dp</item>
     </style>
 
     <!--==============-->
@@ -165,13 +174,13 @@
     </style>
 
     <style name="customRatingBarSmall" parent="@android:style/Widget.RatingBar">
-<!--        <item name="android:progressDrawable">@drawable/custom_rating_stars_small</item>-->
+        <!--        <item name="android:progressDrawable">@drawable/custom_rating_stars_small</item>-->
         <item name="android:progressBackgroundTint">@color/color_FE9870</item>
         <item name="android:ratingBarStyleSmall">@id/text</item>
         <item name="android:layout_margin">0dp</item>
         <item name="android:padding">0dp</item>
         <item name="android:numStars">5</item>
-<!--        <item name="android:isIndicator">true</item>-->
+        <!--        <item name="android:isIndicator">true</item>-->
     </style>
 
     <style name="CustomCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">
