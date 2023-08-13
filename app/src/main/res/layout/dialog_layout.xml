@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linear_dialog_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgBlack_transparent25"
-    android:id="@+id/linear_dialog_parent"
     android:visibility="gone">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="70dp"
         android:background="@color/bgColor"
         app:cardCornerRadius="15dp"
         app:cardElevation="6dp">
@@ -34,8 +37,7 @@
                 style="@style/Text.Black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/PhishScore" />
+                android:layout_marginBottom="10dp" />
 
             <TextView
                 android:id="@+id/tv_result"
@@ -70,7 +72,33 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/border_grey_10dp"
-                    android:text="@string/VisitSite" />
+                    android:text="@string/Abort" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_error_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_score_details"
+                    style="@style/Text.Gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:text="@string/ScoreDetails" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="true"
+                    android:scrollbars="none"
+                    android:visibility="gone" />
 
             </LinearLayout>
 

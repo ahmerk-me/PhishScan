@@ -19,8 +19,13 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.phishscan.app.R
+import com.phishscan.app.adapters.ErrorListAdapter
 import com.phishscan.app.classes.Arabic_Bold_Font
 import com.phishscan.app.classes.Arabic_Regular_Font
 import com.phishscan.app.classes.English_Bold_Font
@@ -38,6 +43,7 @@ import com.phishscan.app.classes.languageSessionManager
 import com.phishscan.app.classes.sessionManager
 import com.phishscan.app.databinding.ActivityMainBinding
 import com.phishscan.app.view.fragment.ScanFragment
+import com.phishscan.app.viewmodel.ScanViewModel
 
 open class MainActivity : AppCompatActivity() {
 
@@ -58,7 +64,7 @@ open class MainActivity : AppCompatActivity() {
 
 //    lateinit var mImageLoader: ImageLoader
 
-//    lateinit var viewModel: UserAuthViewModel
+    lateinit var viewModel: ScanViewModel
 
     var tabNumber = 0
 
@@ -66,6 +72,7 @@ open class MainActivity : AppCompatActivity() {
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
+    var isShowErrorList: Boolean = false
 
     fun setTextFonts(root: ViewGroup) {
 
@@ -252,7 +259,7 @@ open class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-//        viewModel = ViewModelProvider(this)[UserAuthViewModel::class.java]
+        viewModel = ViewModelProvider(this)[ScanViewModel::class.java]
 
         initImageLoader(this)
 
@@ -680,27 +687,45 @@ open class MainActivity : AppCompatActivity() {
     }
 
 
-    fun showPhishDialog(dialogType: Int) {
+    fun showPhishDialog(dialogType: Int, errorList: ArrayList<String>) {
 
         with(binding.layoutDialog) {
 
             linearDialogParent.visibility = VISIBLE
 
+            tvPhishScore.text =
+                act.getString(R.string.PhishScore).replace("aaa", viewModel.phishScore.toString())
+
             when (dialogType) {
 
                 NotPhishing -> {
-                    ivStatusImg.setImageDrawable(ContextCompat.getDrawable(act, R.drawable.not_phishing))
+                    ivStatusImg.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            act,
+                            R.drawable.not_phishing
+                        )
+                    )
                     tvResult.text = act.getString(R.string.NotPhishingText)
                 }
 
                 MaybePhishing -> {
-                    ivStatusImg.setImageDrawable(ContextCompat.getDrawable(act, R.drawable.maybe_phishing))
+                    ivStatusImg.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            act,
+                            R.drawable.maybe_phishing
+                        )
+                    )
                     tvResult.text = act.getString(R.string.MaybePhishingText)
                 }
 
                 Phishing -> {
-                    ivStatusImg.setImageDrawable(ContextCompat.getDrawable(act, R.drawable.not_phishing))
-                    tvResult.text = act.getString(R.string.NotPhishingText)
+                    ivStatusImg.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            act,
+                            R.drawable.phishing
+                        )
+                    )
+                    tvResult.text = act.getString(R.string.PhishingText)
                 }
             }
 
@@ -713,9 +738,42 @@ open class MainActivity : AppCompatActivity() {
                 Snackbar.make(tvVisit, "Aborting...", Snackbar.LENGTH_SHORT).show()
                 linearDialogParent.visibility = GONE
             })
+
+            linearDialogParent.setOnClickListener { }
+
+            var mAdapter = ErrorListAdapter(act, ArrayList())
+            binding.layoutDialog.linearErrorList.visibility = GONE
+
+            if (errorList.size > 0) {
+                binding.layoutDialog.linearErrorList.visibility = VISIBLE
+                setupRecycler(mAdapter)
+                mAdapter.updateList(errorList)
+            }
+
+            binding.layoutDialog.tvScoreDetails.setOnClickListener {
+                isShowErrorList = !isShowErrorList
+                setErrorRecyclerVisibility()
+            }
         }
     }
 
+    private fun setErrorRecyclerVisibility() {
+
+        binding.layoutDialog.rvRecycler.visibility = if (isShowErrorList) VISIBLE else GONE
+
+    }
+
+    private fun setupRecycler(madapter: ErrorListAdapter?) {
+
+        with(binding.layoutDialog) {
+
+            var mlayoutManagerLab = LinearLayoutManager(act)
+            mlayoutManagerLab.orientation = RecyclerView.VERTICAL
+            rvRecycler.layoutManager = mlayoutManagerLab
+            rvRecycler.itemAnimator = DefaultItemAnimator()
+            rvRecycler.adapter = madapter
+        }
+    }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {

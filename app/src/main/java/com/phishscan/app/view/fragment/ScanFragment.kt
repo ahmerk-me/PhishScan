@@ -24,7 +24,9 @@ import com.phishscan.app.R
 import com.phishscan.app.classes.DisableLayout
 import com.phishscan.app.classes.EnableLayout
 import com.phishscan.app.classes.LanguageSessionManager
+import com.phishscan.app.classes.MaybePhishing
 import com.phishscan.app.classes.NotPhishing
+import com.phishscan.app.classes.Phishing
 import com.phishscan.app.classes.SessionManager
 import com.phishscan.app.databinding.FragmentScanBinding
 import com.phishscan.app.view.activity.MainActivity
@@ -62,12 +64,6 @@ open class ScanFragment(private val act: MainActivity) : Fragment() {
 
             viewModel = ViewModelProvider(act)[ScanViewModel::class.java]
 
-            codeScanner = CodeScanner(act, binding.scannerView)
-
-            Log.e("11111", " checkPermissions() ==>" + checkPermissions())
-            if (checkPermissions()) {
-                codeScanner.startPreview()
-            }
         } catch (e: Exception) {
 
             Log.e(
@@ -108,17 +104,25 @@ open class ScanFragment(private val act: MainActivity) : Fragment() {
 
     open fun initViews() {
 
-        act.tabNumber = 0
+        act.tabNumber = 1
         act.setupDefaultSettings()
         act.setTextFonts(binding.root)
 
-        act.binding.appBarHome.appBarNormal.title.text = act.getString(R.string.Scan)
+        codeScanner = CodeScanner(act, binding.scannerView)
 
-        setupScanner()
+        act.binding.appBarHome.appBarNormal.title.text = act.getString(R.string.Scan)
 
         setData()
         observeViewModel()
         onClicks()
+
+        Log.e("11111", " checkPermissions() ==>" + checkPermissions())
+        if (checkPermissions()) {
+            codeScanner.startPreview()
+        }
+
+        setupScanner()
+
     }
 
 
@@ -133,6 +137,10 @@ open class ScanFragment(private val act: MainActivity) : Fragment() {
         binding.scannerView.setOnClickListener {
             codeScanner.startPreview()
         }
+
+        binding.tvNotPhishing.setOnClickListener { viewModel.result.value = NotPhishing }
+        binding.tvMaybePhishing.setOnClickListener { viewModel.result.value = MaybePhishing }
+        binding.tvPhishing.setOnClickListener { viewModel.result.value = Phishing }
     }
 
 
@@ -142,7 +150,10 @@ open class ScanFragment(private val act: MainActivity) : Fragment() {
         codeScanner.decodeCallback = DecodeCallback {
             act.runOnUiThread {
                 Toast.makeText(act, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
-                act.showPhishDialog(NotPhishing)
+                Log.e("11111", " scanned URL ===> ${it.text}")
+
+                if (it.text.isNotEmpty())
+                    viewModel.rateURL(it.text)
             }
         }
 
@@ -160,27 +171,12 @@ open class ScanFragment(private val act: MainActivity) : Fragment() {
 
     private fun observeViewModel() {
 
-//todo: observe the scan here
+        viewModel.result.observe(viewLifecycleOwner) { result ->
 
-//        viewModel.booksArrayList.observe(viewLifecycleOwner) { list ->
-//
-//            Log.d("observeViewModel", "updateList -> " + list?.size)
-//
-//            binding.rvBooksRecycler.visibility =
-//                if (list != null && list.size > 0) View.VISIBLE else View.GONE
-//
-////            viewModel.setPaging(binding.rvReportsRecycler, mlayoutManagerReports, list ?: ArrayList())
-//
-//            mAdapterBooks.updateList(list ?: ArrayList())
-//
-//            showListEmptyMessage(
-//                act.binding.appBarHome.tvNoData,
-//                act.getString(R.string.NoDataFoundLabel),
-//                act,
-//                viewModel.booksArrayList.value.isNullOrEmpty()
-//            )
-//
-//        }
+            Log.d("11111", "result ->$result")
+
+            act.showPhishDialog(result, viewModel.errorList)
+        }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
 
@@ -225,7 +221,8 @@ open class ScanFragment(private val act: MainActivity) : Fragment() {
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 isPermissionGranted = false
-                ActivityCompat.requestPermissions(act,
+                ActivityCompat.requestPermissions(
+                    act,
                     arrayOf(Manifest.permission.CAMERA),
                     RC_PERMISSION
                 )

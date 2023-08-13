@@ -825,5 +825,12 @@
 <!--    PhishScan-->
 
     <string name="Scan">Scan</string>
+    <string name="PhishScore">Phish-Score = aaa</string>
+    <string name="VisitSite">Visit site</string>
+    <string name="Abort">Abort</string>
+    <string name="NotPhishingText">It is safe to visit this website.</string>
+    <string name="MaybePhishingText">Caution! it may be phishing website.</string>
+    <string name="PhishingText">DO NOT VISIT THIS SITE!</string>
+    <string name="ScoreDetails">Show score details</string>
 
 </resources>
