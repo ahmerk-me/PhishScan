@@ -44,6 +44,7 @@ import com.phishscan.app.classes.isEnglish
 import com.phishscan.app.classes.languageSessionManager
 import com.phishscan.app.classes.sessionManager
 import com.phishscan.app.databinding.ActivityMainBinding
+import com.phishscan.app.view.fragment.AboutFragment
 import com.phishscan.app.view.fragment.ScanFragment
 import com.phishscan.app.viewmodel.ScanViewModel
 
@@ -637,12 +638,20 @@ open class MainActivity : AppCompatActivity() {
 
             relativeQr.setOnClickListener {
 
+                Navigator.loadFragment(
+                    act, ScanFragment(act),
+                    R.id.content_home, false, "home"
+                )
                 tabNumber = 1
                 setTabs()
             }
 
             relativeAbout.setOnClickListener {
 
+                Navigator.loadFragment(
+                    act, AboutFragment(act),
+                    R.id.content_home, false, "home"
+                )
                 tabNumber = 2
                 setTabs()
             }
