@@ -1,6 +1,7 @@
 package com.phishscan.app.viewmodel
 
 import android.util.Log
+import androidx.compose.material3.Snackbar
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cells.library.networking.PhishScanAPICall
@@ -37,13 +38,14 @@ class ScanViewModel : ViewModel() {
     private var queryParams: Map<String, String>? = null
 
     var errorList: ArrayList<String> = ArrayList()
+    var expandedUrl = ""
 
 
     fun rateURL(url: String) {
 
         phishScore = 0.0
 
-        var expandedUrl = url
+        expandedUrl = url
 
 //        check all conditions here
         if (isURLShortened(url))
@@ -100,9 +102,9 @@ class ScanViewModel : ViewModel() {
             checkDNSRecord(expandedUrl)
 
 
-            if (phishScore <= 25) {
+            if (phishScore <= 12) {
                 result.value = NotPhishing
-            } else if (phishScore > 25 && phishScore <= 30) {
+            } else if (phishScore > 12 && phishScore <= 25) {
                 result.value = MaybePhishing
             } else
                 result.value = Phishing
@@ -116,14 +118,21 @@ class ScanViewModel : ViewModel() {
     private fun segregateUrl(url: String) {
 
         val uri = URI(url)
-        domain = uri.host ?: "".lowercase()
-        subdomains = domain.split(".").dropLast(1) as ArrayList<String>
-        subdomains = subdomains.map { it.lowercase() } as ArrayList<String>
-        path = uri.path.lowercase()
-        queryParams = uri.query?.split("&")?.associate {
-            val (key, value) = it.split("=")
-            key to value
+
+        try {
+            domain = uri.host ?: "".lowercase()
+            subdomains = domain.split(".").dropLast(1) as ArrayList<String>
+            subdomains = subdomains.map { it.lowercase() } as ArrayList<String>
+            path = uri.path.lowercase()
+            queryParams = uri.query?.split("&")?.associate {
+                val (key, value) = it.split("=")
+                key to value
+            }
+        } catch (e: java.lang.Exception) {
+
+            Log.e("11111", " Some error occurre in segregateUrl()")
         }
+
     }
 
     //    todo: Checking Domain Similarity

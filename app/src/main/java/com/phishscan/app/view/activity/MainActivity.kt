@@ -2,8 +2,10 @@ package com.phishscan.app.view.activity
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
@@ -730,12 +732,13 @@ open class MainActivity : AppCompatActivity() {
             }
 
             tvVisit.setOnClickListener(View.OnClickListener {
-                Snackbar.make(tvVisit, "Visiting website...", Snackbar.LENGTH_SHORT).show()
                 linearDialogParent.visibility = GONE
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(viewModel.expandedUrl))
+                startActivity(intent)
             })
 
             tvAbort.setOnClickListener(View.OnClickListener {
-                Snackbar.make(tvVisit, "Aborting...", Snackbar.LENGTH_SHORT).show()
+//                Snackbar.make(tvVisit, "Aborting...", Snackbar.LENGTH_SHORT).show()
                 linearDialogParent.visibility = GONE
             })
 
