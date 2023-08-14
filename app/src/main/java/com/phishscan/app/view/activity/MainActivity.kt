@@ -120,6 +120,8 @@ open class MainActivity : AppCompatActivity() {
 
         Log.d("setupDefaultSettings", "1")
 
+        binding.layoutDialog.linearDialogParent.visibility = GONE
+
         with(binding.appBarHome.appBarNormal) {
 
             setTabs()
@@ -638,22 +640,26 @@ open class MainActivity : AppCompatActivity() {
 
             relativeQr.setOnClickListener {
 
-                Navigator.loadFragment(
-                    act, ScanFragment(act),
-                    R.id.content_home, false, "home"
-                )
-                tabNumber = 1
-                setTabs()
+                if (tabNumber != 1) {
+                    Navigator.loadFragment(
+                        act, ScanFragment(act),
+                        R.id.content_home, false, "home"
+                    )
+                    tabNumber = 1
+                    setTabs()
+                }
             }
 
             relativeAbout.setOnClickListener {
 
-                Navigator.loadFragment(
-                    act, AboutFragment(act),
-                    R.id.content_home, false, "home"
-                )
-                tabNumber = 2
-                setTabs()
+                if (tabNumber != 2) {
+                    Navigator.loadFragment(
+                        act, AboutFragment(act),
+                        R.id.content_home, false, "home"
+                    )
+                    tabNumber = 2
+                    setTabs()
+                }
             }
         }
 
